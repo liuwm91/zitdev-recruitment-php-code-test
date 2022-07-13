@@ -73,6 +73,11 @@ class Common
             criticalLog('geoHelperAddress critical ==' . $t->getMessage());
             return 0;
         }
+
+        /** review:
+         * 问题：当遇到$response['error']返回非0的时候，就获取不了商家位置的座標了。
+         * 应该把获取商家位置座標的方法提出来。
+         */
     }
 
     // 回调状态过滤
@@ -91,5 +96,10 @@ class Common
 
         $open_status_arr = ['901' => 1, '902' => 2, '903' => 3];
         return $order_id.'-'.$open_status_arr[$status];
+
+        /** review:
+         * 1.当$status传了个意料外的值时（如：911），$open_status_arr[$status]这样的代码会报Undefined offset。应加个判断处理下
+         * 2.建议把订单状态码的转换和判断是否能转换分开两个方法写，保持方法结果返回的类型一致性
+         */
     }
 }
